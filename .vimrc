@@ -16,4 +16,4 @@
  set number
  set numberwidth=2
 
-
+:highlight Normal ctermfg=grey ctermbg=darkblue
