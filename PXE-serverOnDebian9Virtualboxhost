@@ -1,0 +1,98 @@
+PXE-server on a Debian9 Virtualbox host
+(Boot directly .iso files, .img files or Netinst images of OS systems to your computers with only having LAN access to the machines):
+
+Requirements: Computer with VirtualBox installed having LAN card and Internet access:
+
+1. Install Debian9 on a VirtualBox container. 
+	a. set Network -> Adapter 1 -> Attached to: NAT (which is the public internet access point)
+	b. set Network -> Adapter 2 -> Attached to: (type) Bridged Adapter (name of your LAN card) enp0s25 
+2. Boot into the Debian9 container (Installing and configuring the DHCP + TFTP servers and )
+	# apt update && apt upgrade
+	# apt install dnsmasq
+a. Edit /etc/dnsmasq.conf and configure entries and other systems on the network:
+
+interface=eth1
+dhcp-range=10.0.0.101,10.0.0.200,6h
+dhcp-host=10.0.0.253,<hostnameOfLocalMachine>,infinite
+dhcp-boot=pxelinux.0
+enable-tftp
+tftp-root=/var/lib/tftpboot
+
+b. Create the tftp directory root and install Syslinux:
+
+# mkdir -p /var/lib/tftpboot
+# mkdir -p /var/lib/tftpboot/pxelinux.cfg
+
+# apt install syslinux
+
+c. Copy the required for the PXE boot menu files:
+
+# cd /usr/lib/syslinux/modules/bios/
+# cp ldlinux.c32 libcom32.c32 libutil.c32 vesamenu.c32 /var/lib/tftpboot/
+# cp /usr/share/syslinux/pxelinux.0 /var/lib/tftpboot/
+# cp /usr/share/syslinux/memdisk /var/lib/tftpboot/
+
+3. Download a Debian netinst image and any .iso file you would like to have for booting an OS to the client machine.
+
+a. Extract the Netinst.tar.gz and recreate in the tftp root directory the netinst direcory structure:
+
+# mkdir -p /var/lib/tftpboot/debian-installer/i386/
+# cd /home/username/netinst/debian-installer/i386/
+# cp bootnetia32.efi grub/ initrd.gz linux /var/lib/tftpboot/debian-installer/i386/
+
+b. Copy the .iso file to the tftp root directory:
+
+# cp /home/username/debian9.iso /var/lib/tftpboot/
+
+4. Create the default configuration file and directory for the PXE server:
+
+# mkdir -p /var/lib/tftpboot/pxelinux.cfg
+
+a. Add the default configuration which will be used by a client:
+
+vim /var/lib/tftpboot/pxelinux.cfg/default
+
+prompt 0
+timeout 0
+default vesamenu.c32
+
+LABEL Debian9
+	kernel memdisk
+	append iso raw initrd=debian.iso
+
+LABEL Debian9-NetInstall
+	kernel debian-installer/i386/linux
+	append vga=788 initrd=debian-installer/i386/initrd.gz --quiet
+
+5. Start the DHCP server with the TFTP:
+
+# /etc/init.d/dnsmasq start
+
+a. Activate the LAN network interface:
+
+# ip link set eth1 up
+
+b. set the address of PXE host:
+
+# ip addr add 10.0.0.253/24 dev eth1
+
+6. If you are goint to boot a Network installation Debian image not a complete .iso you will have to route the traffic from the LAN to the Public internet which could be done:
+
+# cat /proc/sys/net/ipv4/ip_forward 
+
+a. If result 1 , do not do anything, the Ipv4 forwarding on the kernel is active and if not:
+
+# echo 1 > /proc/sys/net/ipv4/ip_forward
+
+b. Set the routing from the Public internet access 'eth0' to the LAN interface 'eth1':
+
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT
+
+6. Once you start the service and connect a client you can monitor the operations of the DHCP and TFTP servers from:
+
+# tail -f /var/log/syslog
+
+
+
