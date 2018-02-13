@@ -9,15 +9,16 @@ alias ls='ls --color=auto'
  
 #PS1='[\u@\h \W]\$ '
 
-red=$(tput  setaf 3)
-    green=$(tput setaf 2)
-    blue=$(tput setaf 5)
-    reset=$(tput sgr0)
+# red=$(tput  setaf 3)
+#     green=$(tput setaf 2)
+#     blue=$(tput setaf 5)
+#     reset=$(tput sgr0)
+# 
+#     PS1='\[$red\]\u\[$reset\]@\[$green\]\h\[$reset\]:\[$blue\]\w\[$reset\]\$ '
+# 
+#     if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
+#   exec startx
+# fi
 
-    PS1='\[$red\]\u\[$reset\]@\[$green\]\h\[$reset\]:\[$blue\]\w\[$reset\]\$ '
-
-    if [ -z "$DISPLAY" ] && [ "$(fgconsole)" -eq 1 ]; then
-  exec startx
-fi
-
-
+PROMPT_COMMAND='exstatus=$?;
+        PS1="\u@\h :\t: extSt:$exstatus $";'
