@@ -16,8 +16,8 @@
  set number
  set numberwidth=2
 " set foreground colog and background color 
-" :highlight Normal ctermfg=grey ctermbg=darkblue 
- set background=dark
+ :highlight Normal ctermfg=green ctermbg=black
+" set background=dark
 " status line config
  set laststatus=2
  set statusline=
