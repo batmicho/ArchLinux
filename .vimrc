@@ -15,15 +15,12 @@
 " set side numbers and width
  set number
  set numberwidth=2
-" set foreground colog and background color
- :highlight Normal ctermfg=grey ctermbg=darkblue
+" set foreground colog and background color 
+" :highlight Normal ctermfg=grey ctermbg=darkblue 
+ set background=dark
 " status line config
  set laststatus=2
  set statusline=
  set statusline+=\ %f
-" settings to replace tab. :retab for replacing tab in existing files.
-set tabstop=4
-set shiftwidth=4
-set expandtab
-
-
+" disable mouse actions
+ set mouse -=a
