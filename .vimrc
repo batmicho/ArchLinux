@@ -12,6 +12,12 @@
  syntax on
  filetype plugin indent on
  syntax enable
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
 " set side numbers and width
  set number
  set numberwidth=2
