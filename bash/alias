@@ -1,0 +1,36 @@
+#-----------------------------------------------
+# Basic
+
+alias c='clear'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+
+alias ll='ls -lha --color=auto'
+
+#----------------------------------------------
+# Git
+
+alias g='git'
+alias ga='g add'
+alias gp='g push'
+alias gs='g status'
+alias gb='g branch'
+alias gc='g commit -m'
+
+#---------------------------------------------
+# Folders
+
+alias .pj='cd ~/Projects ; ll'
+alias .dw='cd ~/Downloads ; ll'
+alias .dst='cd ~/Desktop ; ll'
+
+#--------------------------------------------
+# System and apps
+
+alias pc='sudo pacman'
+
+alias disk='df -h'
+
+#---------------------------------------------
+
