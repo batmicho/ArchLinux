@@ -6,9 +6,10 @@ alias c='clear'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-alias ll='ls -lha --color=auto'
+alias ll='ls -l'
+alias lll='ls -lha --color=auto'
 alias ldir='ls -p |grep /'
-alias lfile='ls -p| grep -v /'
+alias lfile='ls -p | grep -v /'
 
 #----------------------------------------------
 # Git
