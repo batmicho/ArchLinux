@@ -11,9 +11,6 @@ alias ll='ls -lF'
 alias lll='ls -lha --color=auto'
 alias ld='ls -p |grep / --color=auto'
 alias lf='ls -p | grep -v /'
-
-alias night='shutdown -t 120'
-alias night-off='shutdown -c'
 #----------------------------------------------
 # Git
 
@@ -42,5 +39,7 @@ alias .dc='cd ~/Documents ; ll'
 
 alias pc='sudo pacman'
 alias disk='df -h'
+alias night='shutdown -t 120'
+alias night-off='shutdown -c'
 #---------------------------------------------
 
