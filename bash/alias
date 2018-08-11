@@ -7,7 +7,7 @@ alias s='ssh'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-alias ll='ls -l'
+alias ll='ls -lF'
 alias lll='ls -lha --color=auto'
 alias ld='ls -p |grep / --color=auto'
 alias lf='ls -p | grep -v /'
@@ -23,20 +23,24 @@ alias gp='g push'
 alias gs='g status'
 alias gb='g branch'
 alias gc='g commit -m'
+#---------------------------------------------
+# Network
 
+alias dt='/usr/bin/dig +trace ANY'
+alias dtc='/usr/bin/dig +trace CNAME'
+alias dtm='/usr/bin/dig +trace MX'
+alias wis='whois'
 #---------------------------------------------
 # Folders
 
 alias .pj='cd ~/Projects ; ll'
 alias .dw='cd ~/Downloads ; ll'
 alias .dst='cd ~/Desktop ; ll'
-
+alias .dc='cd ~/Documents ; ll'
 #--------------------------------------------
-# System and apps
+# System and Apps
 
 alias pc='sudo pacman'
-
 alias disk='df -h'
-
 #---------------------------------------------
 
