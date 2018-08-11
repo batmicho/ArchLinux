@@ -2,15 +2,18 @@
 # Basic
 
 alias c='clear'
+alias s='ssh'
 
 alias ..='cd ..'
 alias ...='cd ../..'
 
 alias ll='ls -l'
 alias lll='ls -lha --color=auto'
-alias ldir='ls -p |grep /'
-alias lfile='ls -p | grep -v /'
+alias ld='ls -p |grep / --color=auto'
+alias lf='ls -p | grep -v /'
 
+alias night='shutdown -t 120'
+alias night-off='shutdown -c'
 #----------------------------------------------
 # Git
 
