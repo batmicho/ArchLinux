@@ -1,7 +1,7 @@
 
 while [ 1 ]  
 do
-    echo "===== Start to wifi from NetCtl ==="
+    echo -e "\n\n ===== Start to wifi from NetCtl ====="
 
     echo "10- Stop NetworkManager"  
     echo "0 - Scan for WiFi Networks"   
@@ -9,8 +9,8 @@ do
     echo "2 - List Network Profiles"
     echo "3 - Remove Network Profile"
     echo "4 - Check Wifi wave strenght"
-
-    echo -n "make a selection: "
+    echo -e "\n     # CTRL + C to stop #"
+    echo -ne "\n ---Make a Selection---: "
     read selection
 
     if [ $selection -eq 10 ]; then
