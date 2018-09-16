@@ -9,6 +9,7 @@ do
     echo "2 - List Network Profiles"
     echo "3 - Remove Network Profile"
     echo "4 - Check Wifi wave strenght"
+    echo "5 - airodump-ng " 
     echo -e "\n     # CTRL + C to stop #"
     echo -ne "\n ---Make a Selection---: "
     read selection
@@ -16,7 +17,7 @@ do
     if [ $selection -eq 10 ]; then
         sudo systemctl stop NetworkManager; 
     elif [ $selection -eq 0 ]; then
-        ip a;
+        ip a | grep BRO | awk '{print $2}' | sed s/://g 
         echo "Add the card with which to scan.";
         read wlanCard;
         rfkill unblock 4
@@ -28,9 +29,14 @@ do
         read profile;
         netctl start $profile;
     elif [ $selection -eq 2 ]; then
-        netctl list; 
+        netctl list;
+    elif [ $selection -eq 5 ]; then
+         ip a | grep BRO | awk '{print $2}' | sed s/://g ;
+         echo "Add wifi card"
+         read wl;
+         sudo airodump-ng $wl
     elif [ $selection -eq 4 ]; then
-        wavemon;
+        sudo wavemon;
         break
     else
         echo "wrong selection"
