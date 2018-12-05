@@ -1,7 +1,22 @@
+#Michi Mane did it!
 
+#Add existing interfaces to array from later selection:
+interfaces=()
+for i in $(ip a | grep BRO | awk '{print $2}' | sed s/://g);do
+    interfaces+=("$i")
+done
+#echo "${interfaces[@]}"
+
+#Adding existing netctl profiles to an array later for later selection:
+profiles=()
+for i in $(ls -l /etc/netctl/ | grep '^-' | awk {'print $9'});do
+    profiles+=("$i")
+done
+
+#Starting the command menu:
 while [ 1 ]  
 do
-    echo -e "\n\n ===== Start to wifi from NetCtl ====="
+    echo -e "\n\n ===== Manage Wifi via NetCtl & more ====="
 
     echo "10- Stop NetworkManager"  
     echo "0 - Scan for WiFi Networks"   
@@ -16,30 +31,37 @@ do
 
     if [ $selection -eq 10 ]; then
         sudo systemctl stop NetworkManager; 
-    elif [ $selection -eq 0 ]; then
-        ip a | grep BRO | awk '{print $2}' | sed s/://g 
-        echo "Add the card with which to scan.";
-        read wlanCard;
-        rfkill unblock 4
-        sudo ip link set $wlanCard up
-        sudo wifi-menu -o $wlanCard
+    elif [ $selection -eq 0 ]; then 
+        select opt in "${interfaces[@]}"
+        do
+            echo "Add the card with which to scan."; 
+            #rfkill unblock 4
+            sudo ip link set $opt up
+            sudo wifi-menu -o $opt
+            break 
+         done
     elif [ $selection -eq 1 ]; then
-        netctl list;
-        echo "Add Net Profile";
-        read profile;
-        netctl start $profile;
+        echo "Select the Wifi Profile"; 
+        select opt in "${profiles[@]}"
+        do
+        netctl stop $opt;     
+        netctl start $opt;
+        break 
+        done
     elif [ $selection -eq 2 ]; then
         netctl list;
     elif [ $selection -eq 5 ]; then
-         ip a | grep BRO | awk '{print $2}' | sed s/://g ;
          echo "Add wifi card"
-         read wl;
-         sudo airodump-ng $wl
+         select opt in "${interfaces[@]}"
+         do
+         sudo airodump-ng $opt
+         break
+         done
     elif [ $selection -eq 4 ]; then
         sudo wavemon;
         break
     else
-        echo "wrong selection"
+        echo "Wrong Selection"
     fi 
 done
 
