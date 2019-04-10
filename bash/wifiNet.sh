@@ -1,13 +1,13 @@
-#Michi Mane did it!
+#Michi
 
-#Add existing interfaces to an array to later select from it:
+#Add existing interfaces:
 interfaces=()
 for i in $(ip a | grep BRO | awk '{print $2}' | sed s/://g);do
     interfaces+=("$i")
 done
 #echo "${interfaces[@]}"
 
-#Adding existing interfaces to an arrat to connect to a profile later:
+#Adding existing profiles to array:
 profiles=()
 for i in $(ls -l /etc/netctl/ | grep '^-' | awk {'print $9'});do
     profiles+=("$i")
