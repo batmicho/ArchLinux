@@ -43,6 +43,7 @@ alias disk='df -h'
 alias night='shutdown -t 120'
 alias night-off='shutdown -c'
 alias wifinet='bash ~/bash/wifiNet.sh'
+alias wf='bash ~/bash/wifi-hs.sh'
 #---------------------------------------------
 
 
