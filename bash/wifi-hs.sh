@@ -10,6 +10,8 @@ log_in ()
     
     TEST_hs_CON=$(netctl status $NET_hs |grep -i 'Status:'|awk '{print $2}')
 
+    START_SERVICE=$2
+
     if [ ! -z $1 ]; then
             case $1 in
                 hs)  
@@ -36,9 +38,20 @@ log_in ()
     else
         echo "0000 Use for now only 'sf' or 'hs' or configure new in script;"
     fi
+    if [ "$START_SERVICE" == "sshd" ] && [ ! -z $1 ]; then 
+        if [ -z $(sudo systemctl status sshd |grep 'Active: ' |awk '{print $2}'|sed 's/^i.*//g') ]; then
+            sudo systemctl start sshd;
+            echo "SSH server started"
+            echo "Work with ease bro!"
+        else
+           echo "SSH server already works!"
+        fi 
+    else
+        echo "Can start 'sshd' only! Using 'sshd' as arg 2."
+    fi
 }
 
-log_in $1
+log_in $1 $2
 
 while true; do 
     HAS_IP=$(ip a |grep 'wlp3s0' |sed -rn '/((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])/p'|awk '{print $2}')
