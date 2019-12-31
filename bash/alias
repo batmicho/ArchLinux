@@ -8,8 +8,9 @@ alias v='vim'
 alias ..='cd ..'
 alias ...='cd ../..'
 
-alias ll='ls -lF'
-alias lll='ls -lha --color=auto'
+alias ll='ls -ltrF'
+alias lll='ls -ltrhaF'
+#alias lll='ls -lha --color=auto'
 alias ld='ls -p |grep / --color=auto'
 alias lf='ls -p | grep -v /'
 #----------------------------------------------
@@ -40,10 +41,12 @@ alias .dc='cd ~/Documents ; ll'
 
 alias pc='sudo pacman'
 alias disk='df -h'
-alias night='shutdown -t 120'
-alias night-off='shutdown -c'
+alias night2='sudo /sbin/shutdown -t 120'
+alias night-off='sudo /sbin/shutdown -c'
+alias night='sudo /sbin/shutdown -P'
 alias wifinet='bash ~/bash/wifiNet.sh'
 alias wf='bash ~/bash/wifi-hs.sh'
+alias vbm='vboxmanage'
 #---------------------------------------------
 
 

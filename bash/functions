@@ -1,3 +1,13 @@
+mb () 
+{
+du -sch "$@" |sort -h
+}
+
+gtest ()
+{
+for i in $(find . -type d -iname .git |sed 's/.git$//g'); do echo '-------' && cd $i && pwd && git status && cd; done
+}
+
 lock ()
 {
     if [[ $1 =~ ^[0-9]+$ ]] ; then
@@ -29,17 +39,14 @@ extract ()
     fi
 }
 
-genpasswd() {
-	local l=$1
-       	[ "$l" == "" ] && l=20
-      	tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+hs ()
+{
+    ARGS=${@:1:$#-1}
+    for LAST; do true; done
+    host $ARGS $LAST 8.8.4.4
+    echo "-------------";
+    host $ARGS www.$LAST 8.8.8.8;
 }
 
-hs () {
-   host "$@" 8.8.4.4;
-echo "-------------";
-   host "$@" 8.8.8.8;
-}
-
-export -f lock myip extract genpasswd hs
+export -f lock myip extract hs
 
